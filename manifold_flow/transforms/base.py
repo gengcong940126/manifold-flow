@@ -69,10 +69,10 @@ class CompositeTransform(Transform):
             return outputs, total_jacobian
 
         else:
-            total_logabsdet = torch.zeros(batch_size)
+            total_logabsdet = torch.zeros(batch_size).cuda()
             for func in funcs:
                 outputs, logabsdet = func(outputs, context)
-                total_logabsdet += logabsdet
+                total_logabsdet += logabsdet.cuda()
             return outputs, total_logabsdet
 
     def forward(self, inputs, context=None, full_jacobian=False):
